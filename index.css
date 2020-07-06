@@ -1,0 +1,128 @@
+@font-face {
+    font-family: "hytaleguide";
+    src: url("fonts/PenumbraSerifStd-Bold.otf");
+}
+
+@font-face {
+    font-family: "noto-sans";
+    src: url("fonts/NotoSans-Regular.ttf");
+}
+
+
+body{
+    background-color: #111111;
+    padding: 0;
+    margin: 0;
+}
+h1{
+    color: white;
+    font-family: monospace;
+    margin: 10px 10px 20px 10px;
+}
+h2{
+    color: white;
+    font-family: monospace;
+    margin: 10px;
+
+}
+h5{
+    color:white;
+    margin:10px;
+    font-size: 16px;
+    font-family: monospace;
+}
+p{
+    color:white;
+}
+ul{
+    color:white;
+}
+li{
+    display: inline;
+}
+#main{
+    width: 50rem;
+    /* border: 1px solid green; */
+    margin: 50px auto;
+}
+.section-container{
+    margin: 10px;
+    width:auto;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+#porfolio-container{
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.website-container{
+    overflow: hidden;
+    max-width: 46%;
+    background-color: rgba(10,10,10,1);
+    border-radius: 10px;
+    margin: 10px 0;
+    position: relative;
+}
+
+#hytaleguide{
+    box-shadow: 0 0 100px 10px rgba(89, 0, 255, 0.1);
+    font-family: 'noto-sans';
+    
+}
+#hytaleguide h4{
+    font-family: 'hytaleguide';
+    text-transform: uppercase;
+    text-shadow: 2px 2px #000;
+    font-weight: bold;
+    color: #ffe98d;
+    letter-spacing: 3px;
+}
+#hytaleguide a{
+    color: #ffe98d;
+    font-weight: bold;
+}
+
+#mixo{
+    box-shadow: 0 0 100px 10px rgba(255, 0, 85, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 22px;
+}
+#mixo h4{
+    font-family: 'Times New Roman', Times, serif;
+    background: linear-gradient(152deg, rgba(255,63,20,0.6) 0%, rgba(255,20,108,0.2) 34%, rgba(188,40,255,0.4) 67%, rgba(40,167,255,1) 100%);
+    font-size: 48px;
+    width: 50%;
+    line-height: 15px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 100;
+    margin-bottom: 25px;
+}
+
+#bmaji{
+    box-shadow: 0 0 100px 10px rgba(137, 255, 210, 0.1);
+}
+
+
+.website-container h4{
+    color:white;
+    margin: 10px 0 20px 10px;
+    font-size: 24px;
+}
+.website-container p{
+    margin: 10px;
+}
+.website-container img{
+    width: 100%;
+}
+.website-name-container{
+    height:20px;
+}
+.website-details-container{
+    background-color: rgba(255,255,255,0.03);
+    padding: 5px 10px 5px 0;
+    font-family: monospace;
+}
+.website-details-container p {
+    margin-left: 40px;
+}
