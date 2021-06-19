@@ -1,4 +1,5 @@
 import Footer from "./Footer";
+import Nav from "./Nav";
 
 import styles from "../styles/components/Layout.module.scss";
 
@@ -9,7 +10,7 @@ type Props = {
 const Layout = (props: Props) => {
     return (
         <div className={styles.container}>
-            <div></div>
+            <Nav />
             <div className={styles.main}>{props.children}</div>
             <Footer />
         </div>

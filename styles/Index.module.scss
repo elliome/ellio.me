@@ -30,8 +30,8 @@
             margin: 0;
             background: -webkit-linear-gradient(
                 0deg,
-                var(--primary-color-1),
-                var(--primary-color-2)
+                rgb(var(--primary-color-1)),
+                rgb(var(--primary-color-2))
             );
             background-clip: text;
             -webkit-background-clip: text;
@@ -41,6 +41,7 @@
         p {
             font-size: 1.2rem;
             margin: 0;
+            font-weight: 400;
         }
     }
 }
