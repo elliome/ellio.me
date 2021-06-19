@@ -13,14 +13,16 @@ const Listening = () => {
         <div className={styles.container}>
             <h1>What I{"'"}m listening to at the moment</h1>
             <div className={styles.nowPlaying}>
+                <div className={styles.blurBG}></div>
                 {currentlyPlaying?.item?.album?.images?.[0]?.url ? (
                     <div className={styles.imageBG}>
                         <Image
                             src={
-                                currentlyPlaying?.item?.album?.images?.[0]?.url
+                                currentlyPlaying?.item?.album?.images?.[2]?.url
                             }
                             layout="fill"
                             alt={""}
+                            unoptimized={true}
                         />
                     </div>
                 ) : (
@@ -30,11 +32,12 @@ const Listening = () => {
                     {currentlyPlaying?.item?.album?.images?.[0]?.url ? (
                         <Image
                             src={
-                                currentlyPlaying?.item?.album?.images?.[0]?.url
+                                currentlyPlaying?.item?.album?.images?.[1]?.url
                             }
                             width={150}
                             height={150}
                             alt={""}
+                            unoptimized={true}
                         />
                     ) : (
                         false
