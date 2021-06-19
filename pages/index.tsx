@@ -3,7 +3,7 @@ import Image from "../components/Image";
 import styles from "../styles/Index.module.scss";
 import ReactGol from "react-gol";
 
-import ProfileSource from "/public/images/profile.jpg";
+import ProfileSource from "../public/images/profile.jpg";
 
 const Index = () => {
     return (
