@@ -1,12 +1,16 @@
 import Head from "next/head";
 import Image from "../components/Image";
 import styles from "../styles/Index.module.scss";
+import ReactGol from "react-gol";
 
 import ProfileSource from "../public/images/profile.jpg";
 
 const Index = () => {
     return (
         <div className={styles.container}>
+            <div className={styles.bg}>
+                <ReactGol fillStyle={"rgb(236, 236, 236)"} minFrameTime={50} />
+            </div>
             <div className={styles.centerContainer}>
                 <Image
                     src={ProfileSource}
@@ -19,7 +23,7 @@ const Index = () => {
                     <p>
                         Welcome to my website! The purpose of this site is to
                         serve as a portfolio of my work. I am currently
-                        freelancing as a fullstack webdeveloper.,
+                        freelancing as a fullstack webdeveloper.
                     </p>
                 </div>
             </div>
