@@ -3,11 +3,29 @@ import useFetcher from "../hooks/DataFetching";
 import styles from "../styles/pages/Listening.module.scss";
 
 import Image from "../components/Image";
+import { useEffect, useState } from "react";
 
 const Listening = () => {
     const { data: currentlyPlaying } = useFetcher("/api/spotify/playing");
 
-    console.log(currentlyPlaying);
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (currentlyPlaying?.progress_ms == null) {
+            return;
+        }
+
+        setProgress(currentlyPlaying.progress_ms);
+    }, [currentlyPlaying]);
+
+    useEffect(() => {
+        const intervalSpeed = 100;
+        const interval = setInterval(() => {
+            setProgress((p) => p + 100);
+        }, intervalSpeed);
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -64,7 +82,7 @@ const Listening = () => {
                             className={styles.progress}
                             style={{
                                 width: `${
-                                    (currentlyPlaying?.progress_ms /
+                                    (progress /
                                         currentlyPlaying?.item?.duration_ms) *
                                     100
                                 }%`,

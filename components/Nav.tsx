@@ -1,14 +1,24 @@
 import styles from "../styles/components/Nav.module.scss";
 
+import Link from "next/link";
+
 const Nav = () => {
     return (
         <div className={styles.container}>
             <div className={styles.sections}>
-                <div className={styles.section}>Elliot Emmerson</div>
+                <Link href={"/listening"}>
+                    <a>
+                        <div className={styles.section}>Elliot Emmerson</div>
+                    </a>
+                </Link>
                 <nav className={`${styles.section} ${styles.nav}`}>
                     <button>Blog</button>
                     <button>Projects</button>
-                    <button>Music</button>
+                    <Link href={"/listening"}>
+                        <a>
+                            <button>Music</button>
+                        </a>
+                    </Link>
                     <button>Tools</button>
                 </nav>
             </div>
