@@ -3,13 +3,13 @@ import Image from "../components/Image";
 import styles from "../styles/Index.module.scss";
 import ReactGol from "react-gol";
 
-import ProfileSource from "../public/images/profile.jpg";
+import ProfileSource from "/public/images/profile.jpg";
 
 const Index = () => {
     return (
         <div className={styles.container}>
             <div className={styles.bg}>
-                <ReactGol fillStyle={"rgb(236, 236, 236)"} minFrameTime={50} />
+                <ReactGol fillStyle={"rgb(245, 245, 245)"} minFrameTime={50} />
             </div>
             <div className={styles.centerContainer}>
                 <Image
