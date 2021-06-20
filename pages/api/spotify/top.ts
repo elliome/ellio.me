@@ -23,6 +23,6 @@ export const getTop = async () => {
         artists: await top("artists"),
         tracks: await top("tracks"),
     };
-    console.log(response.artists.items[0]);
+
     return response;
 };

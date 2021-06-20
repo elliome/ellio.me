@@ -34,14 +34,14 @@ const Nav = () => {
                             <Cross />
                         </div>
                     </div>
-                    <button>Blog</button>
-                    <button>Projects</button>
+                    {/* <button>Blog</button> */}
+                    {/* <button>Projects</button> */}
                     <Link href={"/listening"}>
                         <a onClick={() => setIsActive(false)}>
                             <button>Music</button>
                         </a>
                     </Link>
-                    <button>Tools</button>
+                    {/* <button>Tools</button> */}
                 </nav>
             </div>
         </div>

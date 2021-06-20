@@ -59,11 +59,6 @@
     gap: 1rem;
     display: flex;
 
-    @include mixins.respond-to("small") {
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
-    }
-
     .top {
         display: none;
     }
@@ -76,7 +71,7 @@
         width: 100%;
         height: 100vh;
         transition-duration: 0.2s;
-        background-color: rgba(var(--color-1), 0.9);
+        background-color: rgba(var(--color-1), 1);
         flex-direction: column;
 
         button {
