@@ -6,7 +6,7 @@ const Nav = () => {
     return (
         <div className={styles.container}>
             <div className={styles.sections}>
-                <Link href={"/listening"}>
+                <Link href={"/"}>
                     <a>
                         <div className={styles.section}>Elliot Emmerson</div>
                     </a>
