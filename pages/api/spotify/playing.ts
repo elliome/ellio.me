@@ -17,7 +17,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
         }
     );
-    const spotifyJson = await spotifyFetch.json();
+
+    let spotifyJson;
+
+    try {
+        spotifyJson = await spotifyFetch.json();
+    } catch {
+        res.status(500).send({ error: true });
+        return;
+    }
+
     delete spotifyJson.context;
     delete spotifyJson.device;
 

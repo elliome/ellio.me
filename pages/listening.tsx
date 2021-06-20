@@ -14,6 +14,40 @@ const Listening = () => {
         0
     );
 
+    let playing: null | {
+        albumArt: string;
+        name: string;
+        isPaused: Boolean;
+        albumName: string;
+        artist: string;
+        progress: number;
+    } = null;
+
+    if (!currentlyPlaying) {
+        if (recentlyPlayed) {
+            const recent = recentlyPlayed.items?.[0];
+            playing = {
+                albumArt: recent?.track?.album?.images?.[1]?.url,
+                albumName: recent?.track?.album?.name,
+                artist: recent?.track?.artists?.[0]?.name,
+                name: recent?.track?.name,
+                isPaused: true,
+                progress: -1,
+            };
+        }
+    } else {
+        playing = {
+            albumArt: currentlyPlaying?.item?.album?.images?.[1]?.url,
+            albumName: currentlyPlaying?.item?.album?.name,
+            artist: currentlyPlaying?.item?.artists?.[0]?.name,
+            name: currentlyPlaying?.item?.name,
+            isPaused: !currentlyPlaying?.is_playing,
+            progress: currentlyPlaying.progress_ms,
+        };
+    }
+
+    // console.log(recentlyPlayed);
+
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
@@ -39,9 +73,12 @@ const Listening = () => {
     }, []);
 
     useEffect(() => {
-        console.log(progress / currentlyPlaying?.item?.duration_ms);
+        if (progress == null || currentlyPlaying?.item?.duration_ms == null)
+            return;
+
+        if (playing?.progress == -1) return;
+
         if (progress >= currentlyPlaying?.item?.duration_ms) {
-            console.log("refresh cos clever");
             setProgress(0);
             mutateCurrentlyPlaying();
             mutatedPlayed();
@@ -52,66 +89,69 @@ const Listening = () => {
     return (
         <div className={styles.container}>
             <h1>What I{"'"}m listening to at the moment</h1>
-            <div className={styles.nowPlaying}>
-                <div className={styles.blurBG}></div>
-                {currentlyPlaying?.item?.album?.images?.[0]?.url ? (
-                    <div className={styles.imageBG}>
-                        <Image
-                            src={
-                                currentlyPlaying?.item?.album?.images?.[2]?.url
-                            }
-                            layout="fill"
-                            alt={""}
-                            unoptimized={true}
-                        />
-                    </div>
-                ) : (
-                    false
-                )}
-                <div className={styles.image}>
-                    {currentlyPlaying?.item?.album?.images?.[0]?.url ? (
-                        <Image
-                            src={
-                                currentlyPlaying?.item?.album?.images?.[1]?.url
-                            }
-                            width={150}
-                            height={150}
-                            alt={""}
-                            unoptimized={true}
-                        />
+            {playing && (
+                <div className={styles.nowPlaying}>
+                    <div className={styles.blurBG}></div>
+                    {playing.albumArt ? (
+                        <div className={styles.imageBG}>
+                            <Image
+                                src={playing.albumArt}
+                                layout="fill"
+                                alt={""}
+                                unoptimized={true}
+                            />
+                        </div>
                     ) : (
                         false
                     )}
-                </div>
-                <div className={styles.details}>
-                    <div className={styles.label}>Now playing</div>
-                    <div className={styles.songInfo}>
-                        <span className={styles.song}>
-                            {currentlyPlaying?.item?.name}
-                        </span>
-                        <div>
-                            <span className={styles.artist}>
-                                {currentlyPlaying?.item?.artists?.[0]?.name}
-                            </span>
-                            {" - "}
-                            <span className={styles.album}>
-                                {currentlyPlaying?.item?.album?.name}
-                            </span>
+                    <div className={styles.image}>
+                        {playing.albumArt ? (
+                            <Image
+                                src={playing.albumArt}
+                                width={150}
+                                height={150}
+                                alt={""}
+                                unoptimized={true}
+                            />
+                        ) : (
+                            false
+                        )}
+                    </div>
+                    <div className={styles.details}>
+                        {!playing?.isPaused ? (
+                            <div className={styles.label}>Now playing</div>
+                        ) : (
+                            <div className={styles.label}>Paused</div>
+                        )}
+                        <div className={styles.songInfo}>
+                            <span className={styles.song}>{playing.name}</span>
+                            <div>
+                                <span className={styles.artist}>
+                                    {playing.artist}
+                                </span>
+                                {" - "}
+                                <span className={styles.album}>
+                                    {playing.albumName}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.bar}>
-                        <div
-                            className={styles.progress}
-                            style={{
-                                width: `${
-                                    (progress /
-                                        currentlyPlaying?.item?.duration_ms) *
-                                    100
-                                }%`,
-                            }}></div>
+                        {!playing?.isPaused && (
+                            <div className={styles.bar}>
+                                <div
+                                    className={styles.progress}
+                                    style={{
+                                        width: `${
+                                            (progress /
+                                                currentlyPlaying?.item
+                                                    ?.duration_ms) *
+                                            100
+                                        }%`,
+                                    }}></div>
+                            </div>
+                        )}
                     </div>
                 </div>
-            </div>
+            )}
             <div className={styles.recentlyPlayed}>
                 <p>Recently Played</p>
                 <div className={styles.items}>
