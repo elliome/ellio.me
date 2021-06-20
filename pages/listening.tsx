@@ -118,30 +118,28 @@ const Listening = () => {
                     {recentlyPlayed?.items.map((item: any, index: number) => (
                         <a
                             key={index}
-                            href={item?.track?.external_urls?.spotify}>
-                            <div className={styles.track}>
-                                {item?.track?.album?.images?.[1]?.url && (
-                                    <div className={styles.trackImage}>
-                                        <Image
-                                            src={
-                                                item?.track?.album?.images?.[1]
-                                                    ?.url
-                                            }
-                                            alt={""}
-                                            width={50}
-                                            height={50}
-                                        />
-                                    </div>
-                                )}
-                                <div className={styles.details}>
-                                    <span>{item?.track?.name}</span>
-                                    <div className={styles.trackBottomLine}>
-                                        <span>
-                                            {item?.track?.artists?.[0]?.name}
-                                        </span>
-                                        {" - "}
-                                        <span>{item?.track?.album?.name}</span>
-                                    </div>
+                            href={item?.track?.external_urls?.spotify}
+                            className={styles.track}>
+                            {item?.track?.album?.images?.[1]?.url && (
+                                <div className={styles.trackImage}>
+                                    <Image
+                                        src={
+                                            item?.track?.album?.images?.[1]?.url
+                                        }
+                                        alt={""}
+                                        width={50}
+                                        height={50}
+                                    />
+                                </div>
+                            )}
+                            <div className={styles.details}>
+                                <span>{item?.track?.name}</span>
+                                <div className={styles.trackBottomLine}>
+                                    <span>
+                                        {item?.track?.artists?.[0]?.name}
+                                    </span>
+                                    {" - "}
+                                    <span>{item?.track?.album?.name}</span>
                                 </div>
                             </div>
                         </a>
