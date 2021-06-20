@@ -1,0 +1,31 @@
+.container {
+    --col: var(--primary-color-1);
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .icon {
+        height: 1.5rem;
+        width: 1.5rem;
+        transition-duration: 0.2s;
+    }
+
+    &:hover {
+        background-color: rgb(var(--col), 0.2);
+        transition-duration: 0.2s;
+        border-radius: 0.5rem;
+        .icon {
+            fill: rgb(var(--col));
+        }
+    }
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.color-2 {
+    --col: var(--primary-color-2) !important;
+}
