@@ -5,7 +5,7 @@
     position: absolute;
     @include mixins.respond-to("small") {
         position: fixed;
-        background-color: rgba(var(--color-1), 0.8);
+        background-color: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(10px);
     }
