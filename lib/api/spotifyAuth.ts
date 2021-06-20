@@ -18,6 +18,7 @@ export const getAccessToken = async () => {
     });
 
     if (spotifyAuth.status != 200) {
+        console.error(await spotifyAuth.text());
         throw new Error("Failed to get access token");
     }
 

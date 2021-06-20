@@ -4,13 +4,15 @@ import styles from "../styles/pages/Listening.module.scss";
 
 import Image from "../components/Image";
 import { useEffect, useState } from "react";
+import { getRecentlyPLayed } from "../lib/api/recentlyPlayed";
+import { getTop } from "./api/spotify/top";
 
-const Listening = () => {
+const Listening = (props: Props) => {
     const { data: currentlyPlaying, mutate: mutateCurrentlyPlaying } =
         useFetcher("/api/spotify/playing");
     const { data: recentlyPlayed, mutate: mutatedPlayed } = useFetcher(
         "/api/spotify/recentlyPlayed",
-        null,
+        props.recentlyPlayed,
         0
     );
 
@@ -46,16 +48,15 @@ const Listening = () => {
         };
     }
 
-    // console.log(recentlyPlayed);
-
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         if (currentlyPlaying?.progress_ms == null) {
             return;
         }
-
+        mutatedPlayed();
         setProgress(currentlyPlaying.progress_ms);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentlyPlaying]);
 
     useEffect(() => {
@@ -153,35 +154,104 @@ const Listening = () => {
                 </div>
             )}
             <div className={styles.recentlyPlayed}>
-                <p>Recently Played</p>
+                <p className={styles.heading}>Recently played</p>
                 <div className={styles.items}>
-                    {recentlyPlayed?.items.map((item: any, index: number) => (
+                    {recentlyPlayed?.items &&
+                        recentlyPlayed?.items.map(
+                            (item: any, index: number) => (
+                                <a
+                                    key={item.played_at}
+                                    href={item?.track?.external_urls?.spotify}
+                                    className={styles.track}>
+                                    {item?.track?.album?.images?.[1]?.url && (
+                                        <div className={styles.trackImage}>
+                                            <Image
+                                                src={
+                                                    item?.track?.album
+                                                        ?.images?.[1]?.url
+                                                }
+                                                alt={""}
+                                                width={50}
+                                                height={50}
+                                            />
+                                        </div>
+                                    )}
+                                    <div className={styles.details}>
+                                        <span className={styles.topLine}>
+                                            {item?.track?.name}
+                                            <span className={styles.timeAgo}>
+                                                {item?.played_ago ?? ""}
+                                            </span>
+                                        </span>
+                                        <div className={styles.trackBottomLine}>
+                                            <span>
+                                                {
+                                                    item?.track?.artists?.[0]
+                                                        ?.name
+                                                }
+                                            </span>
+                                            {" - "}
+                                            <span>
+                                                {item?.track?.album?.name}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            )
+                        )}
+                </div>
+            </div>
+            <div className={styles.top}>
+                <p className={styles.heading}>
+                    Top Tracks <span>(Last 4 weeks)</span>
+                </p>
+                <div className={styles.items}>
+                    {props.top.tracks.items.map((item: any) => (
                         <a
-                            key={index}
-                            href={item?.track?.external_urls?.spotify}
-                            className={styles.track}>
-                            {item?.track?.album?.images?.[1]?.url && (
-                                <div className={styles.trackImage}>
-                                    <Image
-                                        src={
-                                            item?.track?.album?.images?.[1]?.url
-                                        }
-                                        alt={""}
-                                        width={50}
-                                        height={50}
-                                    />
-                                </div>
-                            )}
-                            <div className={styles.details}>
-                                <span>{item?.track?.name}</span>
-                                <div className={styles.trackBottomLine}>
-                                    <span>
-                                        {item?.track?.artists?.[0]?.name}
-                                    </span>
-                                    {" - "}
-                                    <span>{item?.track?.album?.name}</span>
-                                </div>
+                            key={item.id}
+                            href={item?.external_urls?.spotify}
+                            className={styles.item}>
+                            <div className={styles.image}>
+                                <Image
+                                    src={`${
+                                        item?.album?.images?.[0]?.url ?? "/"
+                                    }`}
+                                    layout="fill"
+                                    alt={`Photo of album art for the song ${item?.name}`}
+                                />
                             </div>
+                            <p className={styles.trackName}>{item?.name}</p>
+                            <p className={styles.bottomLine}>
+                                <span className={styles.artistsName}>
+                                    {item?.artists?.[0]?.name}
+                                </span>
+                                {" - "}
+                                <span className={styles.albumName}>
+                                    {item?.album.name}
+                                </span>
+                            </p>
+                        </a>
+                    ))}
+                </div>
+            </div>
+            <div className={styles.top}>
+                <p className={styles.heading}>
+                    Top Artists <span>(Last 4 weeks)</span>
+                </p>
+                <div className={styles.items}>
+                    {props.top.artists.items.map((item: any) => (
+                        <a
+                            key={item.id}
+                            href={item?.external_urls?.spotify}
+                            className={styles.item}>
+                            <div className={styles.image}>
+                                <Image
+                                    src={`${item?.images?.[0]?.url ?? "/"}`}
+                                    layout="fill"
+                                    alt={`Photo of album art for the song ${item?.name}`}
+                                />
+                            </div>
+                            <p className={styles.topArtistName}>{item?.name}</p>
                         </a>
                     ))}
                 </div>
@@ -190,3 +260,19 @@ const Listening = () => {
     );
 };
 export default Listening;
+
+type Props = {
+    recentlyPlayed: any;
+    top: { artists: any; tracks: any };
+};
+
+export const getStaticProps = async () => {
+    const props: Props = {
+        recentlyPlayed: await getRecentlyPLayed(),
+        top: await getTop(),
+    };
+
+    return {
+        props,
+    };
+};

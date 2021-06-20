@@ -1,3 +1,5 @@
+@use '../abstracts/mixins';
+
 .container {
     min-height: 3rem;
     position: absolute;
@@ -33,8 +35,20 @@
 }
 
 .nav {
-    display: flex;
     gap: 1rem;
+    display: flex;
+    position: relative;
+
+    @include mixins.respond-to("small") {
+        position: absolute;
+        opacity: 0;
+    }
+
+    &Active {
+        @include mixins.respond-to("small") {
+            opacity: 1;
+        }
+    }
 
     button {
         background-color: unset;
