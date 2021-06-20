@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const spotifyFetch = await fetch(
-        "https://api.spotify.com/v1/me/player?market=GB",
+        "https://api.spotify.com/v1/me/player/recently-played?limit=20",
         {
             headers: {
                 Authorization: `Bearer ${ACCESS_TOKEN}`,
@@ -18,8 +18,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
     );
     const spotifyJson = await spotifyFetch.json();
-    delete spotifyJson.context;
-    delete spotifyJson.device;
 
     res.status(200).json(spotifyJson);
 };

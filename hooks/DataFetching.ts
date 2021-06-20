@@ -13,7 +13,7 @@ const fetcher = (url: string) => {
 const useFetcher = (
     query: string,
     initialData = null,
-    refreshInterval = 2000,
+    refreshInterval = 10000,
     isPaused = () => false
 ) => {
     const url = `${query}`;
@@ -22,7 +22,6 @@ const useFetcher = (
         initialData,
         refreshInterval,
         revalidateOnMount: true,
-        dedupingInterval: refreshInterval,
         isPaused,
     });
 

@@ -6,7 +6,13 @@ import Image from "../components/Image";
 import { useEffect, useState } from "react";
 
 const Listening = () => {
-    const { data: currentlyPlaying } = useFetcher("/api/spotify/playing");
+    const { data: currentlyPlaying, mutate: mutateCurrentlyPlaying } =
+        useFetcher("/api/spotify/playing");
+    const { data: recentlyPlayed, mutate: mutatedPlayed } = useFetcher(
+        "/api/spotify/recentlyPlayed",
+        null,
+        0
+    );
 
     const [progress, setProgress] = useState(0);
 
@@ -21,11 +27,27 @@ const Listening = () => {
     useEffect(() => {
         const intervalSpeed = 100;
         const interval = setInterval(() => {
-            setProgress((p) => p + 100);
+            let tempProg = 0;
+            setProgress((p) => {
+                tempProg = p + 100;
+                return tempProg;
+            });
         }, intervalSpeed);
 
         return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        console.log(progress / currentlyPlaying?.item?.duration_ms);
+        if (progress >= currentlyPlaying?.item?.duration_ms) {
+            console.log("refresh cos clever");
+            setProgress(0);
+            mutateCurrentlyPlaying();
+            mutatedPlayed();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [progress]);
 
     return (
         <div className={styles.container}>
@@ -88,6 +110,42 @@ const Listening = () => {
                                 }%`,
                             }}></div>
                     </div>
+                </div>
+            </div>
+            <div className={styles.recentlyPlayed}>
+                <p>Recently Played</p>
+                <div className={styles.items}>
+                    {recentlyPlayed?.items.map((item: any, index: number) => (
+                        <a
+                            key={index}
+                            href={item?.track?.external_urls?.spotify}>
+                            <div className={styles.track}>
+                                {item?.track?.album?.images?.[1]?.url && (
+                                    <div className={styles.trackImage}>
+                                        <Image
+                                            src={
+                                                item?.track?.album?.images?.[1]
+                                                    ?.url
+                                            }
+                                            alt={""}
+                                            width={50}
+                                            height={50}
+                                        />
+                                    </div>
+                                )}
+                                <div className={styles.details}>
+                                    <span>{item?.track?.name}</span>
+                                    <div className={styles.trackBottomLine}>
+                                        <span>
+                                            {item?.track?.artists?.[0]?.name}
+                                        </span>
+                                        {" - "}
+                                        <span>{item?.track?.album?.name}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    ))}
                 </div>
             </div>
         </div>
