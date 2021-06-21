@@ -1,8 +1,5 @@
 import Project, { ProjectProps } from "../components/projects/Project";
 import styles from "../styles/pages/Projects.module.scss";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { getAllProjects } from "../lib/data/md";
 
 type Props = {
@@ -22,10 +19,10 @@ const Projects = (props: Props) => {
 };
 
 export const getStaticProps = async () => {
-    console.log(await getAllProjects());
+    console.log();
 
     const props: Props = {
-        projects: [{ name: "hytaleguide" }],
+        projects: await getAllProjects(),
     };
 
     return { props };

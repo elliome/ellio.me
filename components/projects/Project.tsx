@@ -1,57 +1,108 @@
 import styles from "../../styles/components/Project.module.scss";
-import img from "../../public/projects/hytaleguide/image.png";
 import Image from "../../components/Image";
+import ReactMarkdown from "react-markdown";
+import GitHubLogo from "../../public/icons/GitHub-Mark-Light.png";
 
-export type ProjectProps = { name: string };
+export type ProjectProps = {
+    name: string;
+    body: string;
+    image: string;
+    url: string | null;
+    tags: Array<Tag>;
+    base64: string;
+    github?: string;
+};
+
+type Tag =
+    | "TypeScript"
+    | "JavaScript"
+    | "React"
+    | "NextJS"
+    | "PHP"
+    | "Strapi"
+    | "NodeJS"
+    | "Python";
 
 const Project = (props: ProjectProps) => {
     return (
         <div className={styles.container}>
             <div className={styles.imageContainer}>
                 <Image
-                    src={img}
+                    src={props.image}
+                    width={1920 * 0.5}
+                    height={1080 * 0.5}
                     placeholder={"blur"}
-                    layout="responsive"
+                    blurDataURL={props.base64}
                     alt=""
+                    quality={100}
                 />
                 <div className={styles.tags}>
-                    <Tag tag="JavaScript" />
-                    <Tag tag="React" />
-                    <Tag tag="NextJS" />
-                    <Tag tag="Strapi" />
-                    <Tag tag="NodeJS" />
+                    {props.tags.map((tag) => (
+                        <Tag key={tag} tag={tag} />
+                    ))}
                 </div>
             </div>
             <div className={styles.desc}>
-                <h2 className={styles.title}>HytaleGuide</h2>
-                <p className={styles.body}>
-                    Hytale Guide is the biggest project i have worked on. It
-                    aims to provide a place to document specific aspects of the
-                    game {"'"}Hytale{"'"}. It{"'"}s a wiki type website with
-                    over a 2000 active users.
-                </p>
-                <Button></Button>
+                {props.url ? (
+                    <a href={`https://${props.url}`}>
+                        <h2 className={styles.title}>{props.name}</h2>
+                        <span className={styles.url}>{props.url}</span>
+                    </a>
+                ) : (
+                    <h2 className={styles.title}>{props.name}</h2>
+                )}
+
+                <div className={styles.bodyContainer}>
+                    <p className={styles.body}>
+                        <ReactMarkdown>{props.body}</ReactMarkdown>{" "}
+                    </p>
+                </div>
+                <div className={styles.buttons}>
+                    {props.url && (
+                        <Button externalLink={props.url}>Visit Website</Button>
+                    )}
+                    {props.github && (
+                        <Button
+                            externalLink={`${props.url}`}
+                            github={true}></Button>
+                    )}
+                </div>
             </div>
         </div>
     );
 };
 
-const Tag = (props: {
-    tag:
-        | "TypeScript"
-        | "JavaScript"
-        | "React"
-        | "NextJS"
-        | "PHP"
-        | "Strapi"
-        | "NodeJS"
-        | "Python";
-}) => {
+const Tag = (props: { tag: Tag }) => {
     return <div className={styles.tag}>{props.tag}</div>;
 };
 
-const Button = () => {
-    return <div className={styles.button}>View Website</div>;
+type ButtonProps = {
+    externalLink?: string;
+    github?: Boolean;
+    children?: string;
+};
+
+const Button = (props: ButtonProps) => {
+    if (props.externalLink) {
+        if (props.github) {
+            return (
+                <a href={props.externalLink}>
+                    <div className={`${styles.button} ${styles.github}`}>
+                        <Image src={GitHubLogo} height={20} width={20} alt="" />
+                        {"View on Github"}
+                    </div>
+                </a>
+            );
+        }
+
+        return (
+            <a href={props.externalLink}>
+                <div className={styles.button}>{props.children}</div>
+            </a>
+        );
+    }
+
+    return <div className={styles.button}>{props.children}</div>;
 };
 
 export default Project;

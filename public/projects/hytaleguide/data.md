@@ -1,11 +1,13 @@
 ---
-title: "Two Forms of Pre-rendering"
-date: "2020-01-01"
+name: "Hytale Guide"
+start: "7th April 2019"
+url: "hytaleguide.net"
+tags:
+    - "JavaScript"
+    - "React"
+    - "NextJS"
+    - "Strapi"
+    - "NodeJS"
 ---
 
-Next.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.
-
--   **Static Generation** is the pre-rendering method that generates the HTML at **build time**. The pre-rendered HTML is then _reused_ on each request.
--   **Server-side Rendering** is the pre-rendering method that generates the HTML on **each request**.
-
-Importantly, Next.js lets you **choose** which pre-rendering form to use for each page. You can create a "hybrid" Next.js app by using Static Generation for most pages and using Server-side Rendering for others.
+Hytale Guide is the _biggest_ project I have worked on. It aims to provide a place to document specific aspects of the game [Hytale](https://hytale.com). It's a wiki type website with over a 2000 active users.

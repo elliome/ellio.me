@@ -1,10 +1,10 @@
+@use '../abstracts/mixins';
+
 .container {
     background-color: rgb(var(--color-1));
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     border-radius: 1rem;
-    width: 100%;
-    max-width: 50rem;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -12,9 +12,6 @@
 }
 
 .imageContainer {
-    background-color: rgb(var(--color-2));
-    border-radius: 1rem;
-    width: 100%;
     position: relative;
 }
 
@@ -32,7 +29,7 @@
     display: flex;
     gap: 0.5rem;
     position: absolute;
-    bottom: 0.5rem;
+    bottom: 1rem;
     left: 0.5rem;
     padding: 0.5rem;
     backdrop-filter: blur(20px);
@@ -42,6 +39,17 @@
     flex-wrap: wrap;
     width: auto;
     max-width: calc(100% - 1rem);
+    transition-duration: 0.2s;
+
+    @include mixins.respond-to("tiny") {
+        position: relative;
+        bottom: 0px;
+        left: 0px;
+        padding: 0.5rem 0;
+        max-width: calc(100%);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
 }
 
 .tag {
@@ -50,26 +58,57 @@
     font-size: 0.6rem;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
-    flex-grow: 1;
+    flex-grow: 0;
 }
 
+.url {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    color: black;
+    font-weight: 400;
+}
+
+.bodyContainer {
+    width: 100%;
+}
 .body {
-    margin: 0;
+    margin: 1rem 0 0 0;
+    max-width: calc(1920px * 0.5);
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
 }
 
 .button {
+    user-select: none;
     display: inline-flex;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     justify-content: center;
     align-items: center;
-    background-color: rgba(var(--primary-color-1), 0.25);
+    background-color: rgba(var(--primary-color-1), 0.1);
     color: rgba(var(--primary-color-1), 1);
     border-radius: 0.5rem;
     margin: 1rem 0 0 0;
     transition-duration: 0.2s;
     cursor: pointer;
+    font-weight: 500;
 
     &:hover {
-        background-color: rgba(var(--primary-color-1), 0.4);
+        background-color: rgba(var(--primary-color-1), 0.15);
+        transform: scale(1.05);
+    }
+}
+
+.github {
+    background-color: black;
+    color: white;
+    display: flex;
+    gap: 1rem;
+
+    &:hover {
+        background-color: black;
+        transform: scale(1.05);
     }
 }
