@@ -121,7 +121,6 @@
 
 .recentlyPlayed {
     width: 100%;
-
     .items {
         display: flex;
         gap: 1rem;
@@ -146,6 +145,8 @@
             box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
 
             .details {
+                color: black;
+                font-weight: 500;
                 display: flex;
                 justify-content: center;
                 flex-direction: column;
