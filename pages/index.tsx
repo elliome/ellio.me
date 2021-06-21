@@ -17,6 +17,7 @@ const Index = () => {
                     width={200 / 1.5}
                     height={373 / 1.5}
                     alt={"Photo of me"}
+                    placeholder={"blur"}
                 />
                 <div className={styles.textContainer}>
                     <h1>{"Hi, I'm Elliot"}</h1>
