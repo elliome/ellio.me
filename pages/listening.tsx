@@ -5,7 +5,7 @@ import styles from "../styles/pages/Listening.module.scss";
 import Image from "../components/Image";
 import { useEffect, useState } from "react";
 import { getRecentlyPLayed } from "../lib/api/recentlyPlayed";
-import { getTop } from "./api/spotify/top";
+import { getTop } from "../lib/data/listening";
 
 const Listening = (props: Props) => {
     const { data: currentlyPlaying, mutate: mutateCurrentlyPlaying } =
@@ -23,28 +23,31 @@ const Listening = (props: Props) => {
         albumName: string;
         artist: string;
         progress: number;
+        base64: string;
     } = null;
 
     if (!currentlyPlaying) {
         if (recentlyPlayed) {
             const recent = recentlyPlayed.items?.[0];
             playing = {
-                albumArt: recent?.track?.album?.images?.[1]?.url,
+                albumArt: recent?.track?.album?.images?.[0]?.url,
                 albumName: recent?.track?.album?.name,
                 artist: recent?.track?.artists?.[0]?.name,
                 name: recent?.track?.name,
                 isPaused: true,
                 progress: -1,
+                base64: recent?.base64,
             };
         }
     } else {
         playing = {
-            albumArt: currentlyPlaying?.item?.album?.images?.[1]?.url,
+            albumArt: currentlyPlaying?.item?.album?.images?.[0]?.url,
             albumName: currentlyPlaying?.item?.album?.name,
             artist: currentlyPlaying?.item?.artists?.[0]?.name,
             name: currentlyPlaying?.item?.name,
             isPaused: !currentlyPlaying?.is_playing,
             progress: currentlyPlaying.progress_ms,
+            base64: currentlyPlaying?.base64,
         };
     }
 
@@ -99,7 +102,10 @@ const Listening = (props: Props) => {
                                 src={playing.albumArt}
                                 layout="fill"
                                 alt={""}
-                                unoptimized={true}
+                                // unoptimized={true}
+                                placeholder="blur"
+                                blurDataURL={playing?.base64}
+                                key={playing.albumArt}
                             />
                         </div>
                     ) : (
@@ -112,7 +118,10 @@ const Listening = (props: Props) => {
                                 width={150}
                                 height={150}
                                 alt={""}
-                                unoptimized={true}
+                                // unoptimized={true}
+                                placeholder="blur"
+                                blurDataURL={playing?.base64}
+                                key={playing.albumArt}
                             />
                         ) : (
                             false
@@ -163,13 +172,15 @@ const Listening = (props: Props) => {
                                     key={item.played_at}
                                     href={item?.track?.external_urls?.spotify}
                                     className={styles.track}>
-                                    {item?.track?.album?.images?.[1]?.url && (
+                                    {item?.track?.album?.images?.[0]?.url && (
                                         <div className={styles.trackImage}>
                                             <Image
                                                 src={
                                                     item?.track?.album
-                                                        ?.images?.[1]?.url
+                                                        ?.images?.[0]?.url
                                                 }
+                                                placeholder="blur"
+                                                blurDataURL={item?.base64}
                                                 alt={""}
                                                 width={50}
                                                 height={50}
@@ -218,6 +229,8 @@ const Listening = (props: Props) => {
                                     }`}
                                     layout="fill"
                                     alt={`Photo of album art for the song ${item?.name}`}
+                                    placeholder={"blur"}
+                                    blurDataURL={item.base64}
                                 />
                             </div>
                             <p className={styles.trackName}>{item?.name}</p>
@@ -249,6 +262,8 @@ const Listening = (props: Props) => {
                                     src={`${item?.images?.[0]?.url ?? "/"}`}
                                     layout="fill"
                                     alt={`Photo of album art for the song ${item?.name}`}
+                                    placeholder={"blur"}
+                                    blurDataURL={item.base64}
                                 />
                             </div>
                             <p className={styles.topArtistName}>{item?.name}</p>

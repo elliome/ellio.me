@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getPlaiceholder } from "plaiceholder";
 import { getAccessToken } from "../../../lib/api/spotifyAuth";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -27,6 +28,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return;
     }
 
+    spotifyJson.base64 =
+        (await getPlaiceholder(spotifyJson.item.album.images?.[2].url).then(
+            ({ base64 }) => base64
+        )) ??
+        "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMUlEQVR4nGJJSa9ioCVgoqnpoxaMWjBqwagFoxaMWjBqwagFoxaMWjBqARUBIAAA//8XfwGIp+VBawAAAABJRU5ErkJggg==";
     delete spotifyJson.context;
     delete spotifyJson.device;
 

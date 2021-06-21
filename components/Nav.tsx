@@ -35,7 +35,11 @@ const Nav = () => {
                         </div>
                     </div>
                     {/* <button>Blog</button> */}
-                    {/* <button>Projects</button> */}
+                    <Link href={"/projects"}>
+                        <a onClick={() => setIsActive(false)}>
+                            <button>Projects</button>
+                        </a>
+                    </Link>
                     <Link href={"/listening"}>
                         <a onClick={() => setIsActive(false)}>
                             <button>Music</button>

@@ -1,4 +1,5 @@
 import { formatDistanceToNowStrict, parseISO } from "date-fns";
+import { getPlaiceholder } from "plaiceholder";
 import { getAccessToken } from "./spotifyAuth";
 
 export const getRecentlyPLayed = async () => {
@@ -30,6 +31,22 @@ export const getRecentlyPLayed = async () => {
         });
     } catch {
         throw new Error("Failed to parse req");
+    }
+
+    let urls: { [key: string]: Promise<string> } = {};
+
+    spotifyJson.items.forEach((item: any) => {
+        if (urls[item.track.album.images?.[0]?.url] == undefined) {
+            urls[item.track.album.images?.[0]?.url] = getPlaiceholder(
+                item.track.album.images?.[0]?.url
+            ).then(({ base64 }) => base64);
+        }
+    });
+
+    for (let i = 0; i < spotifyJson.items.length; i++) {
+        spotifyJson.items[i].base64 =
+            (await urls[spotifyJson.items[i].track.album.images?.[0]?.url]) ??
+            "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAMUlEQVR4nGJJSa9ioCVgoqnpoxaMWjBqwagFoxaMWjBqwagFoxaMWjBqARUBIAAA//8XfwGIp+VBawAAAABJRU5ErkJggg==";
     }
 
     return spotifyJson;
