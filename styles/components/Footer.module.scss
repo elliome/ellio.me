@@ -23,6 +23,7 @@
         align-items: center;
         width: 33%;
         padding: 1rem 0;
+        height: 4rem;
         @include mixins.respond-to("small") {
             min-width: 50%;
         }
@@ -45,6 +46,9 @@
                 width: 1rem;
             }
         }
+        @include mixins.respond-to("tiny") {
+            padding: 0 0 1rem 0;
+        }
     }
 }
 
@@ -53,6 +57,10 @@
     letter-spacing: 1px;
     color: black;
 
+    @include mixins.respond-to("tiny") {
+        padding: 0.5rem 0 0 0 !important;
+        height: 3rem !important;
+    }
     span {
         text-transform: capitalize;
         font-weight: 500;
