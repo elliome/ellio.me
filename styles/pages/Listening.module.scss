@@ -171,6 +171,7 @@
             .trackBottomLine {
                 font-size: 0.5rem;
                 height: 35%;
+                opacity: 0.7;
             }
         }
     }
@@ -216,6 +217,8 @@
 
             p {
                 margin: 0;
+                color: black;
+                font-weight: 400;
             }
 
             .trackName {
@@ -225,6 +228,7 @@
 
             .bottomLine {
                 margin-top: 0;
+                opacity: 0.7;
                 .artistsName {
                     font-size: 0.7rem;
                 }
