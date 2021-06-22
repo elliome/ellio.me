@@ -52,6 +52,17 @@
     }
 }
 
+.madeWith {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    a {
+        height: 1.2rem;
+    }
+}
+
 .nowPlaying {
     text-transform: uppercase;
     letter-spacing: 1px;
