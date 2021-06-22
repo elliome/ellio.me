@@ -150,8 +150,11 @@ const Listening = (props: Props) => {
                                 </span>
                             </div>
                         </div>
-                        {!playing?.isPaused && (
-                            <div className={styles.bar}>
+                        <div
+                            className={`${styles.barContainer} ${
+                                playing.isPaused ? styles.paused : ""
+                            }`}>
+                            <div className={`${styles.bar} `}>
                                 <div
                                     className={styles.progress}
                                     style={{
@@ -163,7 +166,7 @@ const Listening = (props: Props) => {
                                         }%`,
                                     }}></div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
             )}

@@ -90,10 +90,10 @@
         }
 
         .bar {
-            margin: 0.5rem 0;
             border-radius: 0.5rem;
             width: 100%;
             height: 0.4rem;
+            min-height: 0.4rem;
             background-color: rgba(255, 255, 255, 0.8);
             overflow: hidden;
 
@@ -105,6 +105,20 @@
                 transition-duration: 0.1s;
                 transition-timing-function: linear;
             }
+        }
+        .barContainer {
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            height: 1.5rem;
+            transition-duration: 0.4s;
+        }
+
+        .paused {
+            margin: 0;
+            height: 0px;
+            opacity: 0.5;
+            overflow: hidden;
         }
     }
 }
