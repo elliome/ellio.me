@@ -68,7 +68,11 @@ const Footer = () => {
                     </a>
                 </Link>
             )}
-            <div className={styles.section}></div>
+            <div className={styles.section}>
+                <span>
+                    Made with <a href="https://nextjs.org">NextJS</a>
+                </span>
+            </div>
             <div className={`${styles.section} ${styles.socials}`}>
                 <a href="https://www.instagram.com/elliotelliot_">
                     <div>
