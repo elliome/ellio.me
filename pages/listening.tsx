@@ -10,13 +10,16 @@ import { getTop } from "../lib/data/listening";
 const Listening = (props: Props) => {
     const { data: currentlyPlaying, mutate: mutateCurrentlyPlaying } =
         useFetcher("/api/spotify/playing");
+
     const { data: recentlyPlayed, mutate: mutatedPlayed } = useFetcher(
         "/api/spotify/recentlyPlayed",
         props.recentlyPlayed,
         0
     );
 
-    let playing: null | {
+    const [playing, setPlaying] = useState<Playing>(null);
+
+    type Playing = {
         albumArt: string;
         name: string;
         isPaused: Boolean;
@@ -24,32 +27,34 @@ const Listening = (props: Props) => {
         artist: string;
         progress: number;
         base64: string;
-    } = null;
+    } | null;
 
-    if (!currentlyPlaying) {
-        if (recentlyPlayed) {
-            const recent = recentlyPlayed.items?.[0];
-            playing = {
-                albumArt: recent?.track?.album?.images?.[0]?.url,
-                albumName: recent?.track?.album?.name,
-                artist: recent?.track?.artists?.[0]?.name,
-                name: recent?.track?.name,
-                isPaused: true,
-                progress: -1,
-                base64: recent?.base64,
-            };
+    useEffect(() => {
+        if (!currentlyPlaying) {
+            if (recentlyPlayed) {
+                const recent = recentlyPlayed.items?.shift();
+                setPlaying({
+                    albumArt: recent?.track?.album?.images?.[0]?.url,
+                    albumName: recent?.track?.album?.name,
+                    artist: recent?.track?.artists?.[0]?.name,
+                    name: recent?.track?.name,
+                    isPaused: true,
+                    progress: -1,
+                    base64: recent?.base64,
+                });
+            }
+        } else {
+            setPlaying({
+                albumArt: currentlyPlaying?.item?.album?.images?.[0]?.url,
+                albumName: currentlyPlaying?.item?.album?.name,
+                artist: currentlyPlaying?.item?.artists?.[0]?.name,
+                name: currentlyPlaying?.item?.name,
+                isPaused: !currentlyPlaying?.is_playing,
+                progress: currentlyPlaying.progress_ms,
+                base64: currentlyPlaying?.base64,
+            });
         }
-    } else {
-        playing = {
-            albumArt: currentlyPlaying?.item?.album?.images?.[0]?.url,
-            albumName: currentlyPlaying?.item?.album?.name,
-            artist: currentlyPlaying?.item?.artists?.[0]?.name,
-            name: currentlyPlaying?.item?.name,
-            isPaused: !currentlyPlaying?.is_playing,
-            progress: currentlyPlaying.progress_ms,
-            base64: currentlyPlaying?.base64,
-        };
-    }
+    }, [currentlyPlaying, recentlyPlayed]);
 
     const [progress, setProgress] = useState(0);
 
@@ -60,7 +65,7 @@ const Listening = (props: Props) => {
         mutatedPlayed();
         setProgress(currentlyPlaying.progress_ms);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentlyPlaying]);
+    }, [currentlyPlaying, recentlyPlayed]);
 
     useEffect(() => {
         const intervalSpeed = 100;
