@@ -45,7 +45,11 @@ const Nav = () => {
                             <button>Music</button>
                         </a>
                     </Link>
-                    {/* <button>Tools</button> */}
+                                        <Link href={"/tools"}>
+                        <a onClick={() => setIsActive(false)}>
+                            <button>Tools</button>
+                        </a>
+                    </Link>
                 </nav>
             </div>
         </div>

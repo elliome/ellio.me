@@ -4,41 +4,56 @@ import { ProjectProps } from "../../components/projects/Project";
 import matter from "gray-matter";
 import { getPlaiceholder } from "plaiceholder";
 
-const projectsDir = path.join(process.cwd(), "public/projects");
-
-export const getAllProjectsNames = () => {
-    const fileNames = fs.readdirSync(projectsDir);
+export const getContentsOfPublicFolder = (folderName: string) => {
+    const publicDir = path.join(process.cwd(), "public");
+    const selectedDir = path.join(publicDir, folderName);
+    const fileNames = fs.readdirSync(selectedDir);
     return fileNames;
 };
 
-export const getAllProjects = async () => {
-    const fileNames = getAllProjectsNames();
-    const projects: Array<ProjectProps> = [];
+export const matterFolder = async (
+    folderName: string
+): Promise<
+    Array<{ matterResult: matter.GrayMatterFile<string>; fileName: string }>
+> => {
+    const response: Array<{
+        matterResult: matter.GrayMatterFile<string>;
+        fileName: string;
+    }> = [];
+    const publicDir = path.join(process.cwd(), "public");
+    const currentDir = path.join(publicDir, folderName);
+
+    const fileNames = getContentsOfPublicFolder(folderName);
+
     for (const fileName of fileNames) {
         if (fileName.startsWith(".")) continue;
-        console.log(fileName);
 
-        const dataPath = path.join(projectsDir, path.join(fileName, "data.md"));
+        const dataPath = path.join(currentDir, path.join(fileName, "data.md"));
         const fileContents = fs.readFileSync(dataPath, "utf8");
 
         const matterResult = matter(fileContents);
+        response.push({ matterResult, fileName });
+    }
+    return response;
+};
 
+export const getAllProjects = async () => {
+    const projects: Array<ProjectProps> = [];
+    const data = await matterFolder("projects");
+
+    for (const item of data) {
         projects.push({
-            name: matterResult.data.name ?? "NAME IS MISSING",
-            body: matterResult.content ?? "BODY IS MISSING",
-            url: matterResult.data.url ?? null,
-            image: `/projects/${fileName}/image.png`,
+            name: item.matterResult.data.name ?? "NAME IS MISSING",
+            body: item.matterResult.content ?? "BODY IS MISSING",
+            url: item.matterResult.data.url ?? null,
+            image: `/projects/${item.fileName}/image.png`,
             base64: await getPlaiceholder(
-                `/projects/${fileName}/image.png`
+                `/projects/${item.fileName}/image.png`
             ).then(({ base64 }) => base64),
-            tags: matterResult.data.tags ?? [],
-            github: matterResult.data.github ?? null,
+            tags: item.matterResult.data.tags ?? [],
+            github: item.matterResult.data.github ?? null,
         });
     }
 
     return projects;
-};
-
-export const getMd = () => {
-    return "h";
 };
