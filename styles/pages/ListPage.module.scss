@@ -10,9 +10,25 @@
 
 .itemContainer {
     display: flex;
+    gap: 1rem;
 
     .imageContainer {
-        height: 100px;
-        width: 100px;
+        height: calc(50px + 2rem);
+        width: calc(50px + 2rem);
+        padding: 1rem;
+        --generated-color: 0, 0, 0;
+        background-color: rgba(var(--generated-color), 0.2);
+        border-radius: 1rem;
+    }
+
+    .label {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .body {
+        font-size: 0.9rem;
+        margin: 0.5rem 0 0 0;
+        opacity: 0.7;
     }
 }

@@ -4,7 +4,12 @@ import List from "../components/List";
 import Image from "../components/Image";
 import { getTools } from "../lib/data/tools";
 
-export type Tool = { name: string; body: string; image: string };
+export type Tool = {
+    name: string;
+    body: string;
+    image: string;
+    bg: Array<number>;
+};
 
 type Props = { tools: Array<Tool> };
 
@@ -16,17 +21,19 @@ const Tools = (props: Props) => {
             <List
                 items={props.tools.map((c, i) => (
                     <div className={styles.itemContainer} key={i}>
-                        <div className={styles.imageContainer}>
+                        <div
+                            className={styles.imageContainer}
+                            style={{ "--generated-color": c.bg } as any}>
                             <Image
                                 src={c.image}
-                                height={100}
-                                width={100}
+                                height={50}
+                                width={50}
                                 alt=""
                             />
                         </div>
                         <div>
-                            <span>{c.name}</span>
-                            <p>{c.body}</p>
+                            <span className={styles.label}>{c.name}</span>
+                            <p className={styles.body}>{c.body}</p>
                         </div>
                     </div>
                 ))}
