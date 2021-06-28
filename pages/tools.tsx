@@ -9,6 +9,7 @@ export type Tool = {
     body: string;
     image: string;
     bg: Array<number>;
+    url: string;
 };
 
 type Props = { tools: Array<Tool> };
@@ -16,11 +17,11 @@ type Props = { tools: Array<Tool> };
 const Tools = (props: Props) => {
     return (
         <div className={styles.container}>
-            <h1>Here are the tools I use</h1>
+            <h1>These are the tools I use</h1>
 
             <List
                 items={props.tools.map((c, i) => (
-                    <div className={styles.itemContainer} key={i}>
+                    <a href={c.url} className={styles.itemContainer} key={i}>
                         <div
                             className={styles.imageContainer}
                             style={{ "--generated-color": c.bg } as any}>
@@ -35,7 +36,7 @@ const Tools = (props: Props) => {
                             <span className={styles.label}>{c.name}</span>
                             <p className={styles.body}>{c.body}</p>
                         </div>
-                    </div>
+                    </a>
                 ))}
                 columns={2}
             />

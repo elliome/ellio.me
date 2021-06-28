@@ -11,6 +11,7 @@
 .itemContainer {
     display: flex;
     gap: 1rem;
+    align-items: center;
 
     .imageContainer {
         height: calc(50px + 2rem);
@@ -19,16 +20,20 @@
         --generated-color: 0, 0, 0;
         background-color: rgba(var(--generated-color), 0.2);
         border-radius: 1rem;
+        flex-shrink: 0;
     }
 
     .label {
+        color: rgba(var(--color-5));
         font-size: 1.1rem;
         font-weight: 500;
     }
 
     .body {
         font-size: 0.9rem;
-        margin: 0.5rem 0 0 0;
-        opacity: 0.7;
+        margin: 0 0 0 0;
+        opacity: 0.5;
+        font-weight: 400;
+        color: rgba(var(--color-7));
     }
 }
