@@ -4,10 +4,12 @@ import styles from "../styles/pages/Index.module.scss";
 import ReactGol from "react-gol";
 
 import ProfileSource from "../public/images/profile.jpg";
+import PageData from "../components/PageData";
 
 const Index = () => {
     return (
         <div className={styles.container}>
+            <PageData />
             <div className={styles.bg}>
                 <ReactGol fillStyle={"rgb(245, 245, 245)"} minFrameTime={50} />
             </div>

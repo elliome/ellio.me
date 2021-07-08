@@ -1,7 +1,7 @@
 ---
 name: "Hytale Guide"
 start: "7th April 2019"
-url: "hytaleguide.net"
+url: "https://hytaleguide.net"
 tags:
     - "JavaScript"
     - "React"

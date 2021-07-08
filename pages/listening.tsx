@@ -6,6 +6,8 @@ import Image from "../components/Image";
 import { useEffect, useState } from "react";
 import { getRecentlyPLayed } from "../lib/api/recentlyPlayed";
 import { getTop } from "../lib/data/listening";
+import { GetStaticProps } from "next";
+import PageData from "../components/PageData";
 
 const Listening = (props: Props) => {
     const { data: currentlyPlaying, mutate: mutateCurrentlyPlaying } =
@@ -97,6 +99,11 @@ const Listening = (props: Props) => {
 
     return (
         <div className={styles.container}>
+            <PageData
+                page="Listening"
+                url="https://ellio.me/listening"
+                desc="See what I'm listening to at the moment"
+            />
             <h1>What I{"'"}m listening to at the moment</h1>
             {playing && (
                 <div className={styles.nowPlaying}>
@@ -289,7 +296,7 @@ type Props = {
     top: { artists: any; tracks: any };
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
     const props: Props = {
         recentlyPlayed: await getRecentlyPLayed(),
         top: await getTop(),
@@ -297,5 +304,6 @@ export const getStaticProps = async () => {
 
     return {
         props,
+        revalidate: 60 * 10,
     };
 };

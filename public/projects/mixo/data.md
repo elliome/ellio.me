@@ -1,7 +1,7 @@
 ---
 name: "Mixo"
 start: "2019"
-url: "mixo.ellio.me"
+# url: "mixo.ellio.me"
 github: "https://github.com/elliome/Mixo"
 tags:
     - "JavaScript"

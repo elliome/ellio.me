@@ -3,6 +3,8 @@ import styles from "../styles/pages/ListPage.module.scss";
 import List from "../components/List";
 import Image from "../components/Image";
 import { getTools } from "../lib/data/tools";
+import React from "react";
+import PageData from "../components/PageData";
 
 export type Tool = {
     name: string;
@@ -17,6 +19,11 @@ type Props = { tools: Array<Tool> };
 const Tools = (props: Props) => {
     return (
         <div className={styles.container}>
+            <PageData
+                page="Tools"
+                url="https://ellio.me/tools"
+                desc="A list of tools I use."
+            />
             <h1>These are the tools I use</h1>
 
             <List

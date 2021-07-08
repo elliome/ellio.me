@@ -53,9 +53,9 @@ const Project = (props: ProjectProps) => {
                 )}
 
                 <div className={styles.bodyContainer}>
-                    <p className={styles.body}>
-                        <ReactMarkdown>{props.body}</ReactMarkdown>{" "}
-                    </p>
+                    <div className={styles.body}>
+                        <ReactMarkdown>{props.body}</ReactMarkdown>
+                    </div>
                 </div>
                 <div className={styles.buttons}>
                     {props.url && (
@@ -63,7 +63,7 @@ const Project = (props: ProjectProps) => {
                     )}
                     {props.github && (
                         <Button
-                            externalLink={`${props.url}`}
+                            externalLink={props.github}
                             github={true}></Button>
                     )}
                 </div>
