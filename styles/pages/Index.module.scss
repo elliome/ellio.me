@@ -24,6 +24,11 @@
         margin-top: 2rem;
         flex-direction: column;
     }
+    background-color: rgba(var(--color-2), 0.2);
+    border-radius: 1rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem;
 
     .textContainer {
         max-width: 35rem;
@@ -51,6 +56,7 @@
         }
 
         p {
+            color: rgba(var(--color-8), 1);
             font-size: 1.2rem;
             margin: 0;
             font-weight: 400;

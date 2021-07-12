@@ -5,13 +5,22 @@ import ReactGol from "react-gol";
 
 import ProfileSource from "../public/images/profile.jpg";
 import PageData from "../components/PageData";
+import { useIsServer } from "../hooks/useIsServer";
 
 const Index = () => {
     return (
         <div className={styles.container}>
             <PageData />
             <div className={styles.bg}>
-                <ReactGol fillStyle={"rgb(245, 245, 245)"} minFrameTime={50} />
+                {!useIsServer() && (
+                    <ReactGol
+                        fillStyle={`rgb(${getComputedStyle(
+                            document.body
+                        ).getPropertyValue("--color-2")})`}
+                        minFrameTime={50}
+                    />
+                )}
+                {/* <ReactGol fillStyle={"rgb(245, 245, 245)"} minFrameTime={50} /> */}
             </div>
             <div className={styles.centerContainer}>
                 <Image

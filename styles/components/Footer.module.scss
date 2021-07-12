@@ -3,13 +3,14 @@
 .container {
     width: 100%;
     background-color: rgb(var(--color-2), 0.2);
+    color: rgb(var(--color-8));
     // height: 4rem;
     // min-height: 4rem;
     display: flex;
     justify-content: stretch;
     align-items: stretch;
     font-weight: 300;
-    z-index: 100;
+    z-index: 10;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
@@ -66,7 +67,7 @@
 .nowPlaying {
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: black;
+    color: rgb(var(--color-8));
 
     @include mixins.respond-to("tiny") {
         padding: 0.5rem 0 0 0 !important;
