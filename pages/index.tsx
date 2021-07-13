@@ -6,21 +6,40 @@ import ReactGol from "react-gol";
 import ProfileSource from "../public/images/profile.jpg";
 import PageData from "../components/PageData";
 import { useIsServer } from "../hooks/useIsServer";
+import { ChangeEventHandler, useEffect, useState } from "react";
 
 const Index = () => {
+    const [color, setColor] = useState<"235, 235, 235" | "40, 40, 40">();
+
+    const handleChange = (e: MediaQueryListEvent) => {
+        const darkModeOn = e.matches;
+        if (darkModeOn) {
+            setColor("40, 40, 40");
+        } else {
+            setColor("235, 235, 235");
+        }
+    };
+
+    useEffect(() => {
+        const mql = window.matchMedia("(prefers-color-scheme: dark)");
+        mql.addEventListener("change", handleChange);
+        setColor(
+            getComputedStyle(document.body).getPropertyValue("--color-2") as
+                | "235, 235, 235"
+                | "40, 40, 40"
+        );
+        return () => {
+            mql.removeEventListener("change", handleChange);
+        };
+    }, []);
+
     return (
         <div className={styles.container}>
             <PageData />
             <div className={styles.bg}>
                 {!useIsServer() && (
-                    <ReactGol
-                        fillStyle={`rgb(${getComputedStyle(
-                            document.body
-                        ).getPropertyValue("--color-2")})`}
-                        minFrameTime={50}
-                    />
+                    <ReactGol fillStyle={`rgb(${color})`} minFrameTime={50} />
                 )}
-                {/* <ReactGol fillStyle={"rgb(245, 245, 245)"} minFrameTime={50} /> */}
             </div>
             <div className={styles.centerContainer}>
                 <Image
