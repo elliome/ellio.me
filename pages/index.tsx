@@ -1,14 +1,25 @@
-import Head from "next/head";
+import { useEffect, useState } from "react";
+
 import Image from "../components/Image";
+import PageData from "../components/PageData";
+import GithubContributions from "../components/GitHubContributions";
+
 import styles from "../styles/pages/Index.module.scss";
+
 import ReactGol from "react-gol";
 
 import ProfileSource from "../public/images/profile.jpg";
-import PageData from "../components/PageData";
-import { useIsServer } from "../hooks/useIsServer";
-import { ChangeEventHandler, useEffect, useState } from "react";
 
-const Index = () => {
+import { useIsServer } from "../hooks/useIsServer";
+import { GetStaticProps } from "next";
+import { getCommits, GitHubCommits } from "../lib/api/getGithubCommits";
+
+export interface IndexProps {
+    githubUser: any;
+    githubCommits: GitHubCommits[];
+}
+
+const Index = (props: IndexProps) => {
     const [color, setColor] = useState<"235, 235, 235" | "40, 40, 40">();
 
     const handleChange = (e: MediaQueryListEvent) => {
@@ -42,13 +53,15 @@ const Index = () => {
                 )}
             </div>
             <div className={styles.centerContainer}>
-                <Image
-                    src={ProfileSource}
-                    width={200 / 1.5}
-                    height={373 / 1.5}
-                    alt={"Photo of me"}
-                    placeholder={"blur"}
-                />
+                <div className={styles.centerImageContainer}>
+                    <Image
+                        src={ProfileSource}
+                        width={200 / 1.5}
+                        height={373 / 1.5}
+                        alt={"Photo of me"}
+                        placeholder={"blur"}
+                    />
+                </div>
                 <div className={styles.textContainer}>
                     <h1>{"Hi, I'm Elliot"}</h1>
                     <p>
@@ -56,10 +69,24 @@ const Index = () => {
                         serve as a portfolio of my work. I am currently
                         freelancing as a fullstack webdeveloper.
                     </p>
+                    <GithubContributions
+                        githubUser={props.githubUser}
+                        githubCommits={props.githubCommits}
+                    />
                 </div>
             </div>
         </div>
     );
+};
+
+export const getStaticProps: GetStaticProps<IndexProps> = async () => {
+    const githubUser = await fetch("https://api.github.com/users/elliome").then(
+        (res) => res.json()
+    );
+
+    const githubCommits = await getCommits();
+
+    return { props: { githubUser, githubCommits } };
 };
 
 export default Index;

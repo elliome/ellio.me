@@ -1,13 +1,15 @@
 import { parse } from "node-html-parser";
 
+export interface GitHubCommits {
+    value: number;
+    x: number;
+    y: number;
+    date: string;
+    index: number;
+}
+
 export const getCommits = async () => {
-    const data: Array<{
-        value: number;
-        x: number;
-        y: number;
-        date: string;
-        index: number;
-    }> = [];
+    const data: Array<GitHubCommits> = [];
 
     const graph = await fetch(
         "https://github.com/users/elliome/contributions"

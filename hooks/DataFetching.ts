@@ -12,7 +12,7 @@ const fetcher = (url: string) => {
 
 const useFetcher = (
     query: string,
-    initialData = null,
+    initialData: any = null,
     refreshInterval = 10000,
     isPaused = () => false
 ) => {
