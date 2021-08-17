@@ -1,0 +1,31 @@
+.container {
+    border: 1px rgb(var(--color-8)) solid;
+    width: 22px;
+    padding: 2px;
+    border-radius: 0.2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .inside {
+        background-color: rgb(var(--color-8));
+        height: 0.2rem;
+        // width: 20%;
+
+        &Low {
+            background-color: red;
+        }
+
+        &Charging {
+            background-color: rgb(0, 255, 0);
+        }
+    }
+
+    .bump {
+        position: absolute;
+        height: 4px;
+        width: 2px;
+        background-color: rgb(var(--color-8));
+        left: calc(100%);
+    }
+}

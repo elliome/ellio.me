@@ -4,11 +4,10 @@
     width: 100%;
     background-color: rgb(var(--color-2), 0.2);
     color: rgb(var(--color-8));
-    // height: 4rem;
-    // min-height: 4rem;
+
     display: flex;
-    justify-content: stretch;
-    align-items: stretch;
+    justify-content: space-evenly;
+    align-items: center;
     font-weight: 300;
     z-index: 10;
     backdrop-filter: blur(10px);
@@ -18,11 +17,11 @@
         flex-wrap: wrap;
     }
     .section {
-        flex-grow: 1;
+        // flex-grow: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 33%;
+
         padding: 1rem 0;
         height: 4rem;
         @include mixins.respond-to("small") {
