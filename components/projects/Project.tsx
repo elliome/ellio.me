@@ -44,7 +44,7 @@ const Project = (props: ProjectProps) => {
             </div>
             <div className={styles.desc}>
                 {props.url ? (
-                    <a href={`https://${props.url}`}>
+                    <a href={props.url}>
                         <h2 className={styles.title}>{props.name}</h2>
                         <span className={styles.url}>{props.url}</span>
                     </a>
