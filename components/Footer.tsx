@@ -3,7 +3,6 @@ import useFetcher from "../hooks/DataFetching";
 import styles from "../styles/components/Footer.module.scss";
 import Image from "./Image";
 import Icon from "./Icon";
-import Battery from "./footerVisuals/battery";
 
 const Footer = () => {
     const { data: currentlyPlaying, mutate: mutateCurrentlyPlaying } =
@@ -95,9 +94,6 @@ const Footer = () => {
                 <a href="https://github.com/elliome">
                     <Icon type="Github" size="small" />
                 </a>
-            </div>
-            <div className={`${styles.section}`}>
-                <Battery />
             </div>
         </div>
     );

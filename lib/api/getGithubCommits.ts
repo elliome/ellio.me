@@ -18,7 +18,7 @@ export const getCommits = async () => {
     const root = parse(graph);
 
     const elem =
-        root.childNodes[1].childNodes[1].childNodes[3].childNodes[1]
+        root.childNodes[0].childNodes[1].childNodes[3].childNodes[1]
             .childNodes[1].childNodes[1];
 
     for (const childNode of elem.childNodes) {
