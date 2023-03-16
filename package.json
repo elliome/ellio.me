@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.21.3",
-    "date-fns": "^2.22.1",
+    "date-fns": "^2.29.3",
     "framer-motion": "^4.1.17",
     "gray-matter": "^4.0.3",
     "next": "^12.3.0",
